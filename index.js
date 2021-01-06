@@ -7,11 +7,19 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', function(socket){
+io.on('connection', socket => {
   console.log('connection');
+  io.emit('connection', 'connection');
+
   socket.on('chat message', function(msg){
     io.emit('chat message', msg);
   });
+
+  socket.on('disconnect', () => {
+    console.log('disconnected');
+    io.emit('disconnected', 'disconnected');
+ });
+
 });
 
 http.listen(port, function(){

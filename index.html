@@ -30,9 +30,20 @@
           $('#m').val('');
           return false;
         });
-        socket.on('chat message', function(msg){
+
+        socket.on('chat message', msg => {
           $('#messages').append($('<li>').text(msg));
           window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on('connection', msg => {
+          console.log('new connection');
+          $('#messages').append($('<li>').text('new connection'));
+        });
+
+        socket.on('disconnected', msg => {
+          console.log('disconnected');
+          $('#messages').append($('<li>').text('disconnected'));
         });
       });
     </script>
